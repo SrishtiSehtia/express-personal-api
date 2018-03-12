@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var ProjectSchema = new Schema({
   title: String,
-  githubLink, String,
+  githubLink: String,
   description: String
 });
 

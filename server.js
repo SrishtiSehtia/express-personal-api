@@ -19,7 +19,8 @@ app.use(function(req, res, next) {
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
+// var Project = require('./models/project');
 
 /**********
  * ROUTES *
@@ -72,16 +73,51 @@ app.get('/api/profile', function apiIndex(req, res) {
   })
 });
 
+// get all projects
 app.get('/api/projects', function apiIndex(req, res) {
-  res.json({
-    name: 'Srishti Sehtia',
-    githubUsername: 'SrishtiSehtia',
-    githubLink: 'https://github.com/SrishtiSehtia/',
-    githubProfileImage: 'https://avatars2.githubusercontent.com/u/27976930?s=400&u=64c87f08d8cc96943c16705f8fb15374b34cb48c&v=4',
-    personalSiteLink: 'https://github.com/SrishtiSehtia/about-me',
-    currentCity: 'San Francisco',
-    Hobbies: [{type: 'dancing'}, {type: 'painting'}]
-  })
+  // find all projects in db
+  db.Project.find(function (err, allProjects) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json({ projects: allProjects });
+    }
+  });
+});
+
+// get one project
+app.get('/api/projects/:id', function (req, res) {
+  // get project id from url params (`req.params`)
+  var projectId = req.params.id;
+
+  // find project in db by id
+  db.Project.findOne({ _id: projectId }, function (err, foundProject) {
+    if (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ error: "Nothing found by this ID." });
+      } else {
+        res.status(500).json({ error: err.message });
+      }
+    } else {
+      res.json(foundProject);
+    }
+  });
+});
+
+
+// create new project
+app.post('/api/projects', function apiIndex(req, res) {
+  // create new project with form data (`req.body`)
+  var newProject = new Project(req.body);
+
+  // save new project in db
+  newProject.save(function (err, savedProject) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(savedProject);
+    }
+  });
 });
 
 /**********
