@@ -108,7 +108,7 @@ app.get('/api/projects/:id', function (req, res) {
 // create new project
 app.post('/api/projects', function apiIndex(req, res) {
   // create new project with form data (`req.body`)
-  var newProject = new Project(req.body);
+  var newProject = new db.Project(req.body);
 
   // save new project in db
   newProject.save(function (err, savedProject) {
