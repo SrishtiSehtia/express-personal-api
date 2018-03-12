@@ -3,7 +3,7 @@
 
 var db = require('./models');
 
-var projects = [
+var all_projects = [
   {
     title: "DevelopMe",
     githubLink: "https://github.com/SrishtiSehtia/develop_me",
@@ -22,11 +22,19 @@ var projects = [
     description: "Terminal trivia game"
   }
 ]
-db.Project.create(projects, function(err, projects){
-  if (err){
-    return console.log("Error:", err);
-  }
 
-  console.log("Created new projects:", projects)
-  process.exit(); // we're all done! Exit the program.
-})
+db.Project.remove({}, function(err, projects) {
+  console.log('removed all projects');
+  db.Project.create(all_projects, function(err, project){
+    if (err){
+      return console.log("Error:", err);
+    }
+
+    console.log('recreated all projects');
+    console.log("created", all_projects.length, "projects");
+
+    // console.log("Created new ", project._id)
+    process.exit(); // we're all done! Exit the program.
+  });
+
+});

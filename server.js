@@ -120,6 +120,21 @@ app.post('/api/projects', function apiIndex(req, res) {
   });
 });
 
+// delete project
+app.delete('/api/projects/:id', function (req, res) {
+  // get project id from url params (`req.params`)
+  var projectId = req.params.id;
+
+  // find project in db by id and remove
+  db.Project.findOneAndRemove({ _id: projectId }, function (err, deletedProject) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(deletedProject);
+    }
+  });
+});
+
 /**********
  * SERVER *
  **********/
