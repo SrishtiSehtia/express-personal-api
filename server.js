@@ -49,13 +49,38 @@ app.get('/api', function apiIndex(req, res) {
   res.json({
     woopsIForgotToDocumentAllMyEndpoints: true, // CHANGE ME ;)
     message: "Welcome to my personal api! Here's what you need to know!",
-    documentationUrl: "https://github.com/example-username/express-personal-api/README.md", // CHANGE ME
-    baseUrl: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    documentationUrl: "https://github.com/SrishtiSehtia/express-personal-api", // CHANGE ME
+    baseUrl: "https://murmuring-citadel-86863.herokuapp.com", // CHANGE ME
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
       {method: "POST", path: "/api/projects", description: "E.g. Create a new project"} // CHANGE ME
     ]
+  })
+});
+
+
+app.get('/api/profile', function apiIndex(req, res) {
+  res.json({
+    name: 'Srishti Sehtia',
+    githubUsername: 'SrishtiSehtia',
+    githubLink: 'https://github.com/SrishtiSehtia/',
+    githubProfileImage: 'https://avatars2.githubusercontent.com/u/27976930?s=400&u=64c87f08d8cc96943c16705f8fb15374b34cb48c&v=4',
+    personalSiteLink: 'https://github.com/SrishtiSehtia/about-me',
+    currentCity: 'San Francisco',
+    Hobbies: [{type: 'dancing'}, {type: 'painting'}]
+  })
+});
+
+app.get('/api/projects', function apiIndex(req, res) {
+  res.json({
+    name: 'Srishti Sehtia',
+    githubUsername: 'SrishtiSehtia',
+    githubLink: 'https://github.com/SrishtiSehtia/',
+    githubProfileImage: 'https://avatars2.githubusercontent.com/u/27976930?s=400&u=64c87f08d8cc96943c16705f8fb15374b34cb48c&v=4',
+    personalSiteLink: 'https://github.com/SrishtiSehtia/about-me',
+    currentCity: 'San Francisco',
+    Hobbies: [{type: 'dancing'}, {type: 'painting'}]
   })
 });
 
