@@ -135,6 +135,33 @@ app.delete('/api/projects/:id', function (req, res) {
   });
 });
 
+// update projects
+app.put('/api/projects/:id', function (req, res) {
+  // get projects id from url params (`req.params`)
+  var projectsId = req.params.id;
+
+  // find projects in db by id
+  db.Project.findOne({ _id: projectsId }, function (err, foundProject) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      // update the projectss's attributes
+      foundProject.title = req.body.title;
+      foundProject.githubLink = req.body.githubLink;
+      foundProject.description = req.body.description;
+
+      // save updated projects in db
+      foundProject.save(function (err, savedProject) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.json(savedProject);
+        }
+      });
+    }
+  });
+});
+
 /**********
  * SERVER *
  **********/
