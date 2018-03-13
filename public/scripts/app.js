@@ -42,6 +42,16 @@ $(document).ready(function(){
   });
 
 
+  $projectList.on('click', '.deleteBtn', function() {
+    console.log('clicked delete button to', '/api/projects/'+$(this).attr('data-id'));
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/projects/'+$(this).attr('data-id')
+      // success: deleteProjectSuccess,
+      // error: deleteProjectError
+    });
+  });
+
   function getProjectHtml(project) {
   return `<hr>
           <p>
@@ -66,7 +76,7 @@ $(document).ready(function(){
     // empty existing posts from view
     $projectList.empty();
 
-    // pass `allBooks` into the template function
+    // pass `allProjects` into the template function
     var projectsHTML = getAllProjectsHtml(allProjects);
 
     // append html to the view
