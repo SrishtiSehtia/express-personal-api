@@ -31,4 +31,52 @@ $(document).ready(function(){
     $createProject.find('input').first().focus();
   });
 
+
+
+  $projectList = $('#projectTarget');
+
+  $.ajax({
+    method: "GET",
+    url: '/api/projects',
+    success: handleSuccess
+  });
+
+
+  function getProjectHtml(project) {
+  return `<hr>
+          <p>
+            <b class="project-title">${project.title}</b>
+            <span class="edit-input" style="display: none">
+              <input type="text" value="${project.title}" />
+              <button class="edit-project-submit-button" data-id="${project._id}">Save</button>
+            </span>
+            <button class="edit-project-button">Edit</button>
+            <br>
+            <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id=${project._id}>Delete</button>
+          </p>
+          `;
+}
+
+  function getAllProjectsHtml(projects) {
+    console.log(projects);
+    return projects.map(el => getProjectHtml(el) ).join("");
+  }
+
+  function render () {
+    // empty existing posts from view
+    $projectList.empty();
+
+    // pass `allBooks` into the template function
+    var projectsHTML = getAllProjectsHtml(allProjects);
+
+    // append html to the view
+    $projectList.append(projectsHTML);
+  }
+
+  function handleSuccess(json) {
+    allProjects = json;
+    render();
+  }
+
+
 });
